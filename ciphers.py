@@ -14,7 +14,7 @@ import re
 ALPHABET_WITHOUT_J = 'ABCDEFGHIKLMNOPQRSTUVWXYZ'
 
 # ----------------------------------------------------------------
-def toupperalphaclean(text: str):
+def to_upper_alpha_clean(text: str):
     """
     TODO: comment semantics.
     TODO: comment use-cases (pt / kt).
@@ -59,13 +59,13 @@ def make_digraphs(text: str):
     return nsplit(evenpad(text), 2)
 
 # ================================================================
-class Vignere:
+class Vigenere:
     key: str
     def __init__(self, key):
         self.key = self.keyprep(key)
 
     def prep(self, text):
-        return toupperalphaclean(text)
+        return to_upper_alpha_clean(text)
     def keyprep(self, text):
         return self.prep(text)
     def ptprep(self, text):
@@ -105,7 +105,7 @@ class Polybius:
     square: list
     char_to_coords: dict
     def __init__(self, text):
-        text = toupperalphaclean(text)
+        text = to_upper_alpha_clean(text)
         self.square = self.make_blank_square()
         seen = set()
         k = 0
@@ -157,7 +157,7 @@ class Playfair:
         return self.square.__str__()
 
     def prep(self, text):
-        return toupperalphaclean(text).replace('J', 'I')
+        return to_upper_alpha_clean(text).replace('J', 'I')
     def keyprep(self, text):
         return self.prep(text)
     def ptprep(self, text):
@@ -244,7 +244,7 @@ class Foursquare:
         return "\n".join(lines)
 
     def prep(self, text):
-        return toupperalphaclean(text).replace('J', 'I')
+        return to_upper_alpha_clean(text).replace('J', 'I')
     def keyprep(self, text):
         return self.prep(text)
     def ptprep(self, text):
@@ -296,14 +296,14 @@ class Foursquare:
 
 # ================================================================
 def vigtest():
-    vig = Vignere('the quick brown fox jumped over the lazy dogs')
+    vig = Vigenere('the quick brown fox jumped over the lazy dogs')
     pt  = 'the rain in spain falls mainly on the plain'
     ct  = vig.encrypt(pt)
     pt2 = vig.decrypt(ct)
 
     assert(ct  == 'MOIHU QPSOJ DWVST XUFEB ELBGC FGALP PKYLB')
     assert(pt2 == 'THERA ININS PAINF ALLSM AINLY ONTHE PLAIN')
-    print('OK test vignere')
+    print('OK test vigenere')
 
 def pstest():
     s = Polybius('GEMINI')
